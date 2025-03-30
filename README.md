@@ -1,46 +1,45 @@
-# Getting Started with Create React App
+# Brewery Lister
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React application that displays a list of microbreweries using the OpenBreweryDB public API.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Microbrewery Listing**: Shows information of "micro" type breweries from the public [OpenBreweryDB](https://api.openbrewerydb.org/breweries) API.
+- **Material UI Table**: Presents the data in a modern designed table.
+- **Pagination**: Shows 5 breweries per page with navigation controls.
+- **Search**: Allows filtering by name or state.
+- **Sorting**: Allows sorting by name or state (ascending/descending).
+- **Error Handling**: Shows error messages if the API doesn't respond correctly.
+- **Loading Indicator**: Shows a spinner while the data is loading.
 
-### `npm start`
+## Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- React 19
+- TypeScript
+- Material UI
+- Fetch API
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## How to Run the Application
 
-### `npm test`
+1. Clone the repository
+2. Install dependencies:
+   ```
+   npm install
+   ```
+3. Start the application:
+   ```
+   npm start
+   ```
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Project Structure
 
-### `npm run build`
+- `src/components/BreweryTable.tsx`: Main component that manages the logic and display of the brewery table.
+- `src/App.tsx`: Root component that configures the theme and layout.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Possible Improvements
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Add more filtering options (by city, etc.)
+- Implement testing with React Testing Library
+- Add options to change the number of rows per page
+- Implement a detailed view for each brewery
