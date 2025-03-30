@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Table, 
   TableBody, 
@@ -40,7 +40,7 @@ const BreweryTable: React.FC = () => {
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [sortBy, setSortBy] = useState<SortKey>('name');
 
-  const sortBreweries = (breweriesList: Brewery[]) => {
+  const sortBreweries = useCallback((breweriesList: Brewery[]) => {
     return [...breweriesList].sort((a, b) => {
       const valueA = a[sortBy].toLowerCase();
       const valueB = b[sortBy].toLowerCase();
@@ -51,7 +51,7 @@ const BreweryTable: React.FC = () => {
         return valueB.localeCompare(valueA);
       }
     });
-  };
+  }, [sortBy, sortDirection]);
 
   useEffect(() => {
     const fetchBreweries = async () => {
