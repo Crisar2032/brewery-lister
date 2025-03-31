@@ -11,6 +11,7 @@ A React application that displays a list of microbreweries using the OpenBrewery
 - **Sorting**: Allows sorting by name or state (ascending/descending).
 - **Error Handling**: Shows error messages if the API doesn't respond correctly.
 - **Loading Indicator**: Shows a spinner while the data is loading.
+- **Statistics Dashboard**: Visual summary of key metrics.
 
 ## Technologies Used
 
@@ -34,12 +35,24 @@ A React application that displays a list of microbreweries using the OpenBrewery
 
 ## Project Structure
 
-- `src/components/BreweryTable.tsx`: Main component that manages the logic and display of the brewery table.
-- `src/App.tsx`: Root component that configures the theme and layout.
+The application follows a component-based architecture for better maintainability:
 
-## Possible Improvements
+### Core Components
 
-- Add more filtering options (by city, etc.)
-- Implement testing with React Testing Library
-- Add options to change the number of rows per page
-- Implement a detailed view for each brewery
+- `src/components/BreweryTable.tsx`: Main container component that manages state and data fetching.
+- `src/components/BreweryTableHeader.tsx`: Header component with title and search functionality.
+- `src/components/BreweryTableContent.tsx`: Table component that displays the brewery data with sorting.
+- `src/components/StatsSection.tsx`: Statistics section that shows summary metrics.
+- `src/components/StatsCard.tsx`: Reusable card component for displaying individual statistics.
+
+### Types
+
+- `src/types/brewery.ts`: Contains TypeScript interfaces and types used across components.
+
+## Architecture Benefits
+
+- **Improved Code Organization**: Clear separation of responsibilities.
+- **Enhanced Maintainability**: Smaller, focused components are easier to update.
+- **Reusability**: Components like StatsCard can be reused throughout the application.
+- **Better Testing**: Components can be tested individually.
+
