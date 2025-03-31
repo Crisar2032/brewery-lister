@@ -1,7 +1,9 @@
 # Brewery Lister
 
 A React application that displays a list of microbreweries using the OpenBreweryDB public API.
-![image](https://github.com/user-attachments/assets/795b42a2-14c6-4248-bab3-6672c4d66251)
+![image](https://github.com/user-attachments/assets/343b4d66-2a63-4ea0-8542-98d1c63a2c54)
+
+- Live Site: https://crisar2032.github.io/brewery-lister/
 
 ## Features
 
