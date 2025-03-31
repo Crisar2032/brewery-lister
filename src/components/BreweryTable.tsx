@@ -40,7 +40,7 @@ const BreweryTable: React.FC = () => {
     const fetchBreweries = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://api.openbrewerydb.org/breweries');
+        const response = await fetch('https://api.openbrewerydb.org/v1/breweries');
         
         if (!response.ok) {
           throw new Error(`Error fetching data: ${response.status}`);
