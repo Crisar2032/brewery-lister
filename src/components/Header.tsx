@@ -48,16 +48,6 @@ const Header: React.FC = () => {
         </Box>
         
         <Box flexGrow={1} />
-        
-        <Typography 
-          variant="body2" 
-          sx={{ 
-            opacity: 0.7,
-            fontStyle: 'italic'
-          }}
-        >
-          Discover the best microbreweries
-        </Typography>
       </Toolbar>
     </AppBar>
   );
