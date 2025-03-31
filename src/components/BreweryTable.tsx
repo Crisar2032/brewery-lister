@@ -1,33 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableContainer, 
-  TableHead, 
-  TableRow, 
   Paper, 
   TablePagination, 
   CircularProgress, 
-  TextField, 
-  Typography, 
-  Link, 
   Box,
   Alert,
-  TableSortLabel
+  Divider
 } from '@mui/material';
-
-interface Brewery {
-  id: string;
-  name: string;
-  brewery_type: string;
-  city: string;
-  state: string;
-  website_url: string | null;
-}
-
-type SortDirection = 'asc' | 'desc';
-type SortKey = 'name' | 'state';
+import { Brewery, SortDirection, SortKey, BreweryStats } from '../types/brewery';
+import StatsSection from './StatsSection';
+import BreweryTableHeader from './BreweryTableHeader';
+import BreweryTableContent from './BreweryTableContent';
 
 const BreweryTable: React.FC = () => {
   const [breweries, setBreweries] = useState<Brewery[]>([]);
@@ -81,6 +64,23 @@ const BreweryTable: React.FC = () => {
     fetchBreweries();
   }, []);
 
+  // Stats calculation
+  const calculateStats = (): BreweryStats => {
+    // Find unique states
+    const uniqueStates = new Set(breweries.map(brewery => brewery.state));
+    
+    // Count breweries with websites
+    const breweriesWithWebsites = breweries.filter(brewery => brewery.website_url).length;
+    
+    return {
+      totalBreweries: breweries.length,
+      states: uniqueStates.size,
+      withWebsites: breweriesWithWebsites
+    };
+  };
+  
+  const stats = calculateStats();
+
   useEffect(() => {
     // Filter and sort by search term
     let filtered = breweries.filter(brewery => 
@@ -127,94 +127,53 @@ const BreweryTable: React.FC = () => {
   }
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <Box p={2}>
-        <Typography variant="h5" gutterBottom>
-          Microbrewery List
-        </Typography>
-        
-        <TextField
-          label="Search by name or state"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={searchTerm}
-          onChange={handleSearchChange}
+    <Box>
+      {/* Stats Cards */}
+      <StatsSection stats={stats} />
+
+      {/* Brewery Table */}
+      <Paper sx={{ width: '100%', overflow: 'hidden', borderRadius: 2 }}>
+        {/* Table Header with Search */}
+        <BreweryTableHeader 
+          searchTerm={searchTerm}
+          onSearchChange={handleSearchChange}
         />
-      </Box>
-      
-      <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="brewery table">
-          <TableHead>
-            <TableRow>
-              <TableCell>
-                <TableSortLabel
-                  active={sortBy === 'name'}
-                  direction={sortBy === 'name' ? sortDirection : 'asc'}
-                  onClick={() => handleSort('name')}
-                >
-                  Name
-                </TableSortLabel>
-              </TableCell>
-              <TableCell>City</TableCell>
-              <TableCell>
-                <TableSortLabel
-                  active={sortBy === 'state'}
-                  direction={sortBy === 'state' ? sortDirection : 'asc'}
-                  onClick={() => handleSort('state')}
-                >
-                  State
-                </TableSortLabel>
-              </TableCell>
-              <TableCell>Website</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredBreweries
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((brewery) => (
-                <TableRow key={brewery.id}>
-                  <TableCell>{brewery.name}</TableCell>
-                  <TableCell>{brewery.city}</TableCell>
-                  <TableCell>{brewery.state}</TableCell>
-                  <TableCell>
-                    {brewery.website_url ? (
-                      <Link 
-                        href={brewery.website_url} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                      >
-                        Visit site
-                      </Link>
-                    ) : (
-                      "N/A"
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))}
-            {filteredBreweries.length === 0 && (
-              <TableRow>
-                <TableCell colSpan={4} align="center">
-                  No breweries found
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      
-      <TablePagination
-        rowsPerPageOptions={[5]}
-        component="div"
-        count={filteredBreweries.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        labelDisplayedRows={({ from, to, count }) => 
-          `${from}-${to} of ${count !== -1 ? count : `more than ${to}`}`
-        }
-      />
-    </Paper>
+        
+        {/* Table Content */}
+        <BreweryTableContent 
+          breweries={filteredBreweries}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          sortBy={sortBy}
+          sortDirection={sortDirection}
+          onSort={handleSort}
+        />
+        
+        <Divider />
+        
+        {/* Pagination */}
+        <TablePagination
+          rowsPerPageOptions={[5]}
+          component="div"
+          count={filteredBreweries.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          labelDisplayedRows={({ from, to, count }) => 
+            `${from}-${to} of ${count !== -1 ? count : `more than ${to}`}`
+          }
+          sx={{
+            borderTop: '1px solid #eaeaea',
+            '.MuiTablePagination-selectIcon': {
+              color: 'primary.main'
+            },
+            '.MuiTablePagination-actions button': {
+              color: 'primary.main'
+            }
+          }}
+        />
+      </Paper>
+    </Box>
   );
 };
 
